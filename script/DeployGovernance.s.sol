@@ -18,26 +18,20 @@ contract DeployGovernance is Script {
         
         vm.startBroadcast(deployerPrivateKey);
 
-        // 1. Деплоим токен управления
         GovernanceToken govToken = new GovernanceToken(1000000 * 10**18);
 
-        // Нам нужно заранее знать адрес контракта Governor, чтобы передать его в Timelock.
-        // Вычисляем адрес, по которому будет развернут governor (так как nonce деплоера увеличится на 1)
         address deployerAddress = vm.addr(deployerPrivateKey);
         uint256 currentNonce = vm.getNonce(deployerAddress);
         address predictedGovernorAddress = vm.computeCreateAddress(deployerAddress, currentNonce + 1);
 
-        // Настраиваем роли прямо для конструктора Timelock
         address[] memory proposers = new address[](1);
-        proposers[0] = predictedGovernorAddress; // Только Governor сможет создавать пропозалы
+        proposers[0] = predictedGovernorAddress; 
 
         address[] memory executors = new address[](1);
-        executors[0] = address(0); // Кто угодно сможет исполнять прошедшие таймлок задачи
+        executors[0] = address(0); 
 
-        // 2. Деплоим TimeLock (админом ставим address(0), чтобы у деплоера вообще не было контроля!)
         TimeLock timelock = new TimeLock(MIN_DELAY, proposers, executors, address(0));
 
-        // 3. Деплоим GovernorContract (его адрес совпадет с предсказанным выше)
         GovernorContract governor = new GovernorContract(
             govToken,
             timelock,

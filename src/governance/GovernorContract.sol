@@ -19,10 +19,10 @@ contract GovernorContract is
     constructor(
         IVotes _token,
         TimelockController _timelock,
-        uint48 _initialVotingDelay,  // Сколько блоков ждать до начала голосования
-        uint32 _initialVotingPeriod, // Длительность голосования в блоках (например, 1 неделя)
-        uint256 _initialProposalThreshold, // Сколько токенов нужно иметь, чтобы создать пропозал
-        uint256 _quorumNumeratorValue // % голосов от общего числа, нужный для кворума (например, 4%)
+        uint48 _initialVotingDelay, 
+        uint32 _initialVotingPeriod, 
+        uint256 _initialProposalThreshold, 
+        uint256 _quorumNumeratorValue 
     )
         Governor("SuperAppGovernor")
         GovernorSettings(_initialVotingDelay, _initialVotingPeriod, _initialProposalThreshold)
