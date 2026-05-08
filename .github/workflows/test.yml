@@ -1,0 +1,26 @@
+name: Foundry CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check:
+    name: Foundry project compile and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Run Foundry Compile
+        run: forge compile
+
+      - name: Run Foundry Tests
+        run: forge test
