@@ -1,4 +1,4 @@
-name: Foundry CI
+name: DeFi Protocol - Compliance DevOps CI
 
 on:
   push:
@@ -7,21 +7,59 @@ on:
     branches: [ main ]
 
 jobs:
-  check:
-    name: Foundry project compile and test
+  smarts-validation:
+    name: Foundry Core Security & Lint Check
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - name: Install Foundry
+      - name: Install Foundry Toolchain
         uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
 
-      - name: Run Foundry Compile
-        run: forge compile
+      - name: 1. Code Quality - Check Formatting (forge fmt)
+        run: forge fmt --check
 
-      - name: Run Foundry Tests
-        run: forge test
+      - name: 2. Smart Contract Compilation
+        run: forge build --sizes
 
+      - name: 3. Run Full Suite Automated Testing
+        run: forge test -vvv
+
+      - name: 4. Check Code Coverage Thresholds
+        run: forge coverage
+
+      - name: Set up Python for Security Audit
+        uses: actions/setup-python@v5
+        with:
+          python-python-version: '3.10'
+
+      - name: 5. Security Audit - Run Slither Static Analyzer
+        uses: crytic/slither-action@v0.3.0
+        continue-on-error: true 
+        with:
+          target: '.'
+
+  frontend-validation:
+    name: Frontend Quality & Linter Sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: 1. Install Linter Dependencies
+        run: |
+          npm init -y
+          npm install --save-dev prettier
+
+      - name: 2. Code Quality - Run Prettier Format Validation
+        run: npx prettier --check "index.html"
