@@ -2,9 +2,8 @@
 pragma solidity ^0.8.24;
 
 import "forge-std/Test.sol";
-import "../src/token/MockERC20.sol";
-import "../src/lending/LendingPool.sol";
-
+import "src/token/MockERC20.sol";
+import "src/lending/LendingPool.sol";
 contract LendingPoolTest is Test {
     MockERC20 collateral;
     MockERC20 debt;

@@ -2,9 +2,8 @@
 pragma solidity ^0.8.24;
 
 import "forge-std/Test.sol";
-import "../src/token/MockERC20.sol";
-import "../src/amm/AMMFactory.sol";
-
+import "src/token/MockERC20.sol";
+import "src/amm/AMMFactory.sol";
 contract AMMFactoryTest is Test {
     MockERC20 tokenA;
     MockERC20 tokenB;

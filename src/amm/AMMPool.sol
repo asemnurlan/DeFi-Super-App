@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-import {IERC20} from "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
-import {SafeERC20} from "openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol";
-import {ReentrancyGuard} from "openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol";
-import {LPToken} from "./LPToken.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import {LPToken} from "src/token/LPToken.sol";
 
 contract AMMPool is ReentrancyGuard {
     using SafeERC20 for IERC20;
@@ -32,7 +32,7 @@ contract AMMPool is ReentrancyGuard {
         require(_token0 != _token1, "same token");
         token0 = IERC20(_token0);
         token1 = IERC20(_token1);
-        lpToken = new LPToken();
+        lpToken = new LPToken("DeFi AMM LP Token", "LP-AMM", address(this));
     }
 
     function addLiquidity(uint256 amount0, uint256 amount1) external nonReentrant returns (uint256 lpMinted) {

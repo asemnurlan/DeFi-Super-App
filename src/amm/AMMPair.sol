@@ -2,10 +2,13 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "../libraries/YulMath.sol";
+import {ERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import {LPToken} from "src/token/LPToken.sol";
 
-contract AMMPair is ReentrancyGuardUpgradeable {
+contract AMMPair is ERC20Upgradeable, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     IERC20 public immutable token0;

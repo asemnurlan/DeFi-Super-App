@@ -5,16 +5,12 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC4626Upgrad
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "../../lib/openzeppelin-contracts-upgradeable/contracts/utils/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol"; 
 
-contract DeFiVault is
-    ERC20Upgradeable,
-    ERC4626Upgradeable,
-    UUPSUpgradeable,
-    OwnableUpgradeable,
-    ReentrancyGuardUpgradeable
-{
+contract DeFiVault is Initializable, ERC4626Upgradeable, OwnableUpgradeable, ReentrancyGuard, UUPSUpgradeable {
     uint256 public totalYieldHarvested;
 
     event YieldHarvested(uint256 amount);
@@ -31,8 +27,6 @@ contract DeFiVault is
         __ERC20_init("DeFi Super Vault Share", "DSVS");
         __ERC4626_init(IERC20(asset_));
         __Ownable_init(owner_);
-        __UUPSUpgradeable_init();
-        __ReentrancyGuard_init();
     }
 
     function deposit(uint256 assets, address receiver)
