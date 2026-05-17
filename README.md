@@ -2,6 +2,7 @@
 A fully integrated decentralized application (dApp) built on Ethereum Layer 2 simulation infrastructure. The project features immutable DeFi core mechanisms, automated price feeds, custom governance modules, responsive user telemetry interfaces, and robust CI/CD automation pipelines.
 
 This architecture completely fulfills all requirements listed under **Section 3.4 (Frontend Requirements)** and **Section 3.5 (DevOps Requirements)** of the evaluation specification.
+<img width="1911" height="901" alt="image" src="https://github.com/user-attachments/assets/018acaf1-533f-4600-83f0-87e7192ed350" />
 
 
 ## 1. Technical Architecture Overview
